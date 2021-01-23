@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom Integration</title>
+    <!-- import #zmmtg-root css -->
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.8.5/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.8.5/css/react-select.css" />
+</head>
+<body>
+
+    
+    
+    <!-- import ZoomMtg dependencies -->
+    <script src="https://source.zoom.us/1.8.5/lib/vendor/react.min.js"></script>
+    <script src="https://source.zoom.us/1.8.5/lib/vendor/react-dom.min.js"></script>
+    <script src="https://source.zoom.us/1.8.5/lib/vendor/redux.min.js"></script>
+    <script src="https://source.zoom.us/1.8.5/lib/vendor/redux-thunk.min.js"></script>
+    <script src="https://source.zoom.us/1.8.5/lib/vendor/lodash.min.js"></script>
+
+    <!-- import ZoomMtg -->
+    <script src="https://source.zoom.us/zoom-meeting-1.8.5.min.js"></script>
+
+
+    <script>
+        // For CDN version default
+        ZoomMtg.setZoomJSLib('https://dmogdx0jrul3u.cloudfront.net/1.8.5/lib', '/av');
+        
+        ZoomMtg.preLoadWasm();
+        ZoomMtg.prepareJssdk();
+        
+        const zoomMeeting = document.getElementById("zmmtg-root");
+
+        // JOIN A MEETING
+        function joinMeeting(signature)
+        {
+            ZoomMtg.init({
+                isSupportAV: true,
+                leaveUrl: 'end.html',
+                success: function() {
+
+                    ZoomMtg.join({
+                        signature: signature,
+                        apiKey: "your_api_key",
+                        meetingNumber: 82299146512,
+                        userName: "devugo",
+                        // password optional; set by Host
+                        passWord: 111111,
+                        error(res) { 
+                            console.log(res) 
+                        }
+                    })		
+                },
+                error: (error) => {
+                    console.log(error)
+                }
+            })
+        }
+
+        // Generate Signature
+        const generateSignature = async () => {
+            let _data = {
+                "meetingNumber": 82299146512,
+                "role": 0
+            }
+
+            // Replace the URL to yours (where you have your signature app deployed)
+            await fetch('https://zoom-signature-2.herokuapp.com/', {
+                method: "POST",
+                body: JSON.stringify(_data),
+                headers: {"Content-type": "application/json; charset=UTF-8"}
+            })
+            .then(response => response.json()) 
+            .then(json => {
+                
+                let signature = json.signature;
+
+                if(signature){
+                    joinMeeting(signature);
+                }
+            })
+            .catch(err => console.log(err));
+        }
+
+        // Generate a signature to launch app on load of page
+        generateSignature();
+        
+    </script>
+</body>
+</html>
