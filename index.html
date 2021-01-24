@@ -36,7 +36,11 @@
         function joinMeeting(signature)
         {
             ZoomMtg.init({
+                // Two-way audio and video over VoIP is disabled by default.
+                // Set isSupportAV to true to enable that
                 isSupportAV: true,
+                // The page to load when the meeting is over.
+                // Create the file and have a basic HTML content there.
                 leaveUrl: 'end.html',
                 success: function() {
 
