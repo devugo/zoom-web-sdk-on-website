@@ -12,7 +12,7 @@ This project utilizes Zoom web SDK to integrate a video conferencing app into a 
 - Run `git clone https://github.com/devugo/zoom-web-sdk-on-website.git` on your terminal/cmd to clone the project from GitHub.
 
 - On `line 69`, change the **url** of the request to your signature app url.
-Want to know how to create a signature generator app? Check out this [blog post](""). The blog post explains how every bit of code here was written.
+Want to know how to create a signature generator app? Check out this [blog post]("https://blog.devugo.com/how-to-integrate-zoom-web-sdk-to-a-website"). The blog post explains how every bit of code here was written.
 - Set your `apiKey` on `line 45`.
 - Change `meetingNumber` to your zoom meeting number on `line 46` and `line 64`
 - Set `role` value on `line 65`, set '1' if host and '0' if visitor.
